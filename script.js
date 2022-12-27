@@ -1,5 +1,6 @@
 var table = document.getElementById('table');
 const next = document.getElementById('next');
+const restart = document.getElementById('restart');
 const callednum = document.getElementById('called-number');
 
 let drawnNumbers = [] // Array to hold drawn numbers
@@ -19,9 +20,13 @@ function getNumber() {
 }
 
 next.addEventListener('click', () => {
+    if (drawnNumbers.length > 75) {
+        alert("No more numbers to draw!")
+    }
     
     let num = getNumber();
     drawnNumbers.push(num);
+    next.innerText = "Draw Number"
     for (let i = 0, row; row = table.rows[i]; i++) {
         for (let j = 0, col; col = row.cells[j]; j++) {
             if (col.innerText === num.toString()) {
@@ -49,4 +54,17 @@ next.addEventListener('click', () => {
         callednum.innerText = "O " + num.toString();
     }
 });
+
+restart.addEventListener('click', () => {
+    drawnNumbers = [];
+    for (let i = 0, row; row = table.rows[i]; i++) {
+        for (let j = 0, col; col = row.cells[j]; j++) {
+            col.classList.remove('visible');
+        }
+    }
+    callednum.innerText = "_ __"
+    next.innerText = "Start"
+})
+
+
 
